@@ -4,5 +4,10 @@
 </div>
 
 ## Malthus
+Grafic pentru modelul lui Malthus si populatia Romaniei, r a fost calculat pentru intervalul 1950-1980
+
+<div align="center">
+<img src="https://github.com/alextrifan1/Bachelor-Thesis/blob/master/img/img.png" />
+</div>
 
 ## Verhulst
