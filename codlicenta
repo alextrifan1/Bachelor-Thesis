@@ -1,0 +1,494 @@
+\documentclass[12pt]{report}
+%\usepackage{showframe}
+\frenchspacing
+\sloppy
+\parskip=0cm
+\renewcommand{\baselinestretch}{1.5}
+
+\usepackage[paperwidth=210mm,paperheight=297mm,tmargin=30mm,lmargin=30mm,rmargin=30mm,bmargin=30mm]{geometry}
+
+\newcommand{\ba}{\begin{array}}
+\newcommand{\ea}{\end{array}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\bfr}{\begin{flushright}}
+\newcommand{\efr}{\end{flushright}}
+\newcommand{\f}{\frac}
+\newcommand{\ov}{\overline}
+\newcommand{\un}{\underline}
+\newcommand{\vs}{\vspace}
+\newcommand{\tg}{{\rm tg\, }}
+\newcommand{\arctg}{{\rm arctg\, }}
+\newcommand{\arcctg}{{\rm arcctg\, }}
+\newcommand{\sh}{{\rm sh\, }}
+\newcommand{\ch}{{\rm ch\, }}
+\newcommand{\ctg}{{\rm ctg\, }}
+\newcommand{\R}{{\rm Re \, }}
+\newcommand{\I}{{\rm Im \, }}
+\newcommand{\Log}{{\rm Log \, }}
+\newcommand{\Arg}{{\rm Arg \, }}
+\newcommand{\rang}{{\rm rang \, }}
+\newcommand{\grad}{{\rm grad \, }}
+\newcommand{\cat}{{\rm cat \, }}
+\newcommand{\card}{{\rm card \, }}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\newcommand{\p}{\partial}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Ri}{\ \Rightarrow\ }
+\newcommand{\Le}{\ \Leftarrow\ }
+\newcommand{\Lr}{\ \Leftrightarrow\ }
+\newcommand{\ds}{\displaystyle}
+\newcommand{\ung}{\widehat}
+\newcommand{\tr}{\triangle}
+\newcommand{\q}{\quad}
+\newcommand{\va}{\varphi}
+\newcommand{\hook}{\hookrightarrow}
+\newcommand{\cc}{^\circ}
+\newcommand{\bb}{\mathbb}
+\newcommand{\til}{\widetilde}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{indentfirst}
+\usepackage[romanian]{babel}
+%\usepackage{maple} eroare
+
+\usepackage{eurosym}
+
+\usepackage{eurosym}
+
+\usepackage{float}
+\usepackage{makeidx}
+\usepackage{cite}
+\usepackage{fancyhdr}
+
+\usepackage{amsfonts}
+\usepackage{subfigure}
+\usepackage{graphics}
+\usepackage{ifthen}
+
+\usepackage{graphicx}
+\usepackage{textcase}
+
+\usepackage{calc}
+\usepackage{supertabular}
+
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{corollary}[theorem]{Corolarul}
+\newtheorem{proposition}[theorem]{Propozi\c{t}ia}
+
+\theoremstyle{definition}
+\newtheorem{defi}[theorem]{Defini\c{t}ia}
+\newenvironment{definition}{\begin{defi}\rm}{\end{defi}}
+\newtheorem{rem}[theorem]{Observa\c{t}ia}
+\newenvironment{remark}{\begin{rem}\rm}{\end{rem}}
+\newtheorem{ex}[theorem]{Exemplul}
+\newenvironment{example}{\begin{ex}\rm}{\end{ex}}
+\newtheorem{problem}[theorem]{Problema}
+
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\numberwithin{equation}{section}
+
+
+\begin{document}
+
+\title{Ecuații diferențiale în dinamica populațiilor: Analiză și aplicații practice}
+
+\author{Trifan Alexandru}
+
+\date{}
+\maketitle
+
+\newpage
+\tableofcontents
+
+%\thispagestyle{empty}
+%\begin{dedication}
+%\end{dedication}
+\setcounter{page}{0}
+
+\thispagestyle{empty}
+\chapter{Introducere}
+\section{Scopul lucr\u{a}rii}
+
+\hspace*{10mm}Până acum câteva secole, omul nu a fost niciodată nevoit să se 
+întrebe dacă populația noastră are o rată de creștere care depășește capacitățile de susținere ale mediului înconjurător. Însa, în ultimele secole s-au ridicat mai multe întrebări legate de numărul de oameni pe care planetă îi poate găzdui, cât și de importantă estimării resurselor pe care un ecosistem îl poate oferi.\\
+\hspace*{10mm}Thomas R. Malthus a fost printre primii care a ridicat problema creșterii continue a populației. Acesta a propus în lucrarea “An Essay on the Principle of Population." un model în care nașterile și decesele sunt direct proporționale cu numărul de indivizi din specia respectivă. Malthus susținea că populațiile cresc în mod inevitabil până depășesc resursele de hrană disponibile, ducând astfel la un colaps al societății.\\
+\hspace*{10mm}S-a dovedit că modelul lui Malthus nu este unul bun pentru estimarea populației pe termen lung, ci doar pe termen scurt. Totuși, problema pe care o ridică rămâne relevantă chiar și în ziua de astăzi.\\
+\hspace*{10mm}În anul 1838, pornind de la modelul lui Malthus, matematicianul belgian Verhulst introduce un model mai bun pentru determinarea creșterii unei populații. Verhulst introduce o constantă de suport relativ la mediul înconjurător. Astfel obținem un model care estimează mult mai corect creșterea unei populații pe termen lung.\\
+\hspace*{10mm}Au fost dezvoltate și modele care tratează cazul în care doua sau mai multe specii interacționează.(...) \\
+\hspace*{10mm}Consider că înțelegerea modului în care populațiile cresc și interacționează între ele este necesar pentru a putea anticipa evoluția mediului înconjurător. În lucrarea de față voi prezenta mai detaliat modelele menționate mai sus și am sa arăt câteva aplicații practice ale acestora.\\
+
+\section{Modelare matematică}
+
+Modelarea matematică reprezintă procesul prin care reducem un fenomen din viața reală la o reprezentare matematică pe care să o putem analiza. În general, procesul de modelare pornește de la probleme formulate în limbaj cotidian. Majoritatea fenomenelor din viața reală sunt mult prea complexe pentru a putea fi modelate în totalitate. Astfel, suntem nevoiți să stabilim care sunt cele mai importante componente pentru modelul nostru.\\
+\hspace*{10mm}Pașii pentru realizarea unui model matematic sunt următorii:
+\begin{enumerate}
+    \item Alegerea unei probleme din viața reală pe care dorim să o rezolvăm
+    \item Stabilirea datelor relevante pentru problema și elaborăm ipotezele cu care vom lucra
+    \item Dezvoltarea modelului matematic, identificarea parametrilor necesari și a variabilelor pe care o să le utilizăm
+    \item Obținerea rezultatelor prin rezolvarea problemei utilizând tehnicile matematice necesare
+    \item Interpretarea rezultatelor obținute
+    \item Validarea rezultatelor prin comparare cu date reale sau alte surse de referință
+\end{enumerate}
+
+
+\hspace*{10mm}Pe tot parcursul procesului trebuie să acordăm atenție fiecărei etape și să le ajustam dacă acestea necesita acest lucru. Altfel vom obține date inadecvate și vom fi nevoiți sa luam procesul de la capăt.\\ 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{LicentaDiag.png}
+    \caption{}
+    \label{fig:enter-label}
+\end{figure}
+
+\section{Preliminarii}
+\subsection{Ecuații și sisteme de ecuații diferențiale}
+\begin{definition}
+    Numim \textit{ecuație diferențială} o relație între o funcție necunoscută,
+    derivatele sale și variabilele independente. Dacă într-o ecuație diferențială
+    găsim doar derivate ordinare ale funcției necunoscute, iar acestea sunt în relație
+    de dependență cu o singură variabilă independentă, atunci ecuația se numeșste ecuație 
+    diferențială ordinară.
+Forma generală a unei ecuații diferențiale de ordin n: 
+\begin{equation}
+    \label{1.1.1}
+     F(t, x(t), x^{'}(t), \dots, x^{(n)}(t)) = 0
+\end{equation}
+unde $t\in J\subseteq\mathbb{R}$ si $F:J\times\mathbb{R}^{n}\times\dots\times\mathbb{R}^{n}$
+
+\end{definition}
+
+\begin{definition}
+     Fie $f:D\subseteq\mathbb{R}\times\mathbb{R}^{n}\rightarrow\mathbb{R}^{n}$ o funcție continuă. Printr-o ecuație diferențială de ordin I înțelegem:
+     \begin{equation}
+         \label{1.1.1}
+         x^{'}(t) = f(t,x(t))
+     \end{equation}
+     unde $x = x(t)$ este necunoscuta.
+\end{definition}
+
+\begin{definition}
+    \textit{Spunem că funcția $\varphi: I \rightarrow \mathbb{R}$ este soluție a ecuației 1.2.2 pe intervalul $I \subseteq D$ dacă satisface următoarele proprietăți:}
+    \begin{enumerate}
+        \item[$(i)$] $\forall t \in I (t, \varphi(t)) \in D$;
+        \item [$(ii)$] $\varphi$ e derivabila pe I;
+        \item [$(iii)$]$\varphi^{'}(t) = f(t, \varphi(t))$, $\forall t \in I$.
+    \end{enumerate}
+    \textit{Există trei tipuri de soluții}
+    \begin{enumerate}
+        \item Soluție explicită
+        \item Soluție implicită
+        \item Soluție în formă parametrică
+    \end{enumerate}
+
+\end{definition}
+
+\begin{definition}
+    O ecuație de forma \begin{equation}
+        F(t, x(t), x^{'}(t), \dots, x^{n}(t)) = 0
+    \end{equation} unde $t \in J \subseteq \mathbb{R}$, iar $F:J\times\mathbb{R}^{n}\times\dots\times\mathbb{R}^{n}\rightarrow\mathbb{R}^{n}$ se numește ecuație diferențială de ordin n.
+\end{definition}
+
+\begin{definition}
+    Sisteme de ecua\c{t}ii diferen\c{t}iale. Forma general\u{a} a unui sistem de $n$ ecua\c{t}ii diferen\c{t}iale de ordinul \^intai \^in form\u{a} normal\u{a} este:
+\end{definition}
+\begin{equation}
+\label{1.1.1}
+\left\{\ba{ll}
+		x_{1}^{'}(t)= f_{1}(t,x_{1}(t),...,x_{n}(t)) \\
+        x_{2}^{'}(t)= f_{2}(t,x_{1}(t),...,x_{n}(t)) \\
+        \vdots \\
+        x_{n}^{'}(t)= f_{n}(t,x_{1}(t),...,x_{n}(t))
+\ea\right.
+\end{equation}       
+         
+\textit{Dac\u{a} not\u{a}m $x=(x_{1},...,x_{n})$ ,$ f=(f_{1},...,f_{n})$, se ob\c{t}ine forma vectorial\u{a} a sistemului:}
+\begin{equation}
+\label{1.2.6}
+x^{'}(t)=f(t,x(t))
+\end{equation}
+unde $f:D_{f}\rightarrow\mathbb{R}^{n}$, $ D_{f}\subseteq\mathbb{R}^{n+1} $\\
+
+\begin{remark}
+    Sistemul \ref{1.1.1} este liniar dacă $\forall i \in [1,n]$ funcțiile $f_{i}$ sunt liniare. În caz contrar, sistemul este neliniar.
+\end{remark}
+    Putem trece sistemul de ecuații diferențiale în formă matriceală, făcând următoarele notații:
+
+\[
+A = \begin{pmatrix}
+a_{11}(t) & a_{12}(t) & \cdots & a_{1n}(t) \\
+a_{21}(t) & a_{22}(t) & \cdots & a_{2n}(t) \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{n1}(t) & a_{n2}(t) & \cdots & a_{nn}(t)
+\end{pmatrix},
+\quad
+X = \begin{pmatrix}
+x_1 \\
+x_2 \\
+\vdots \\
+x_n
+\end{pmatrix}
+\quad \text{și} \quad
+F = \begin{pmatrix}
+f_1 \\
+f_2 \\
+\vdots \\
+f_n
+\end{pmatrix},
+\]
+\\
+
+Astfel sistemul se poate scrie în felul următor:
+\begin{equation}
+    X^{'} = A\cdot X + F
+\end{equation}
+
+\begin{definition}
+\label{d1.2.9}
+\textit{O func\c{t}ie $x:I\rightarrow\mathbb{R}^n$ se nume\c{s}te \textbf{solu\c{t}ie a sistemului} de ecua\c{t}ii dac\u{a} sunt \^indeplinite urm\u{a}toarele condi\c{t}ii:\\
+\hspace*{5mm}$(i)$ $I\subseteq\mathbb{R}$ este un interval nedegenerat;\\
+\hspace*{5mm}$(ii)$ $x\in C^{1}(I,\mathbb{R}^n)$ \c{s}i $(t,x(t))\in D_{f}$ , $\forall t\in I$ ;\\
+\hspace*{5mm}$(iii)$ $x^{'}(t)=f(t,x(t))$, $\forall t\in I $}
+\end{definition}
+
+
+\begin{definition}
+    O ecuație diferențială de ordin I sub forma $x^{'}(t) = f(t,x)$ poate fi interpretată geometric ca un câmp vectorial în planul delimitat de domeniul lui f. Pentru fiecare punct de coordonate $(t_{0}, x_{0}) \in D_{f}$ asociem o direcție de viteză unghiulară $f(t_{0}, x_{0})$.Curbele $\Gamma$, de clas\u{a} $C^{1}$ din $D_{f}$, se numesc curbe integrale ale c\^{a}mpului vectorial $f$ dac\u{a} oricare ar fi un punct $(t,x)\in \Gamma$ vectorul c\^{a}mpului $f$ \^in acest punct este tangent la curba $\Gamma$. 
+\end{definition}
+
+\begin{example}
+    Să considerăm următoarea ecuație diferențială: $x^{'}(t) = x - t$. În figura următoare vom reprezenta câmpul vectorial asociat ecuației.\\
+\end{example}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{camp_vectorial_poza.png}
+\end{figure}
+
+\subsection{Noțiuni de stabilitate}
+
+Fie ecuația diferențială $x^{'} = f(x,t)$ și condiția inițială $x(t_{0}) = \eta$.
+Considerăm că  $f \in C(D)$ este o funcție locală Lipschitz în raport cu 2 variabile, iar $D \subset \mathbb{R}$ o mulțime nevidă deschisă.
+
+\begin{definition}
+    Fie $\varphi_{1} : I \rightarrow \mathbb{R}$ și $\varphi_{2} : J \rightarrow \mathbb{R}$ două soluții ale ecuației. Spunem că $\varphi_{1}$ este o prelungire a lui $\varphi_{2}$ daca $J \subset I, \varphi_{2}(x) = \varphi_{1}(x) \forall x \in J$
+\end{definition}
+Dacă soluția $\varphi : I \rightarrow \mathbb{R}$ este definită pe cel mai mare interval posibil, adică nu are prelungire, o numim soluție saturată sau maximală. Ecuația admite o singură soluție saturată pentru care condiția inițială $x(t_{0}) = \eta$ este satisfăcută. Notăm această soluție cu $\varphi(x, t_{0}, \eta)$ pentru $\forall(t_{0}, \eta) \in D$ pereche fixată.
+\begin{definition}
+    Fie $\varphi^{*} : (\alpha, \infty) \rightarrow \mathbb{R}$ o soluție saturată a ecuației date, $t_{0} \in (\alpha, \infty)$ fixat. Numim $\varphi^{*}$ soluție stabilă dacă $\forall \epsilon \textgreater 0$ $\exists \delta=\delta(\epsilon, t_{0}) \textgreater 0$ astfel încât $\forall \eta \in \mathbb{R}$ ce satisfac proprietatea $\rvert \eta- \varphi^{*}(t_{0})  \rvert \textless \delta$ avem:\\
+    \hspace*{5mm}$(i)$ $\varphi(x,t_{0},\eta)$ este definită pe $[t_{0},\infty)$\\
+    \hspace*{5mm}$(ii)$ $\rvert \varphi(x,t_{0},\eta) -\varphi^{*}(t) \rvert \textgreater \epsilon$, pentru orice $[t_{0},\infty)$\\
+    În caz contrar, spunem că $\varphi^{*}$ este o soluție instabilă a ecuației.
+\end{definition}
+
+\begin{definition}
+    Fie $\varphi^{*} : (\alpha, \infty) \rightarrow \mathbb{R}$ o soluție saturată a ecuației date, $t_{0} \in (\alpha, \infty)$ fixat. Numim $\varphi^{*}$ atractor al ecuației dacă $\exists \rho \textgreater 0$, astfel încât pentru orice $\eta \in \mathbb{R}$ care satisface proprietatea $\rvert \eta - \varphi^{*}(t_{0}) \rvert \textless \rho$ avem:\\
+    \hspace*{5mm}$(i)$ $\varphi(x,t_{0},\eta)$ este definită pe $[t_{0},\infty)$\\
+    \hspace*{5mm}$(ii)$ $\lim_{x\rightarrow +\infty} \rvert \varphi(x,t_{0},\eta) -\varphi^{*}(t) \rvert = 0$\\
+    Dacă $\varphi^{*}$ este soluție stabliă și atractor, atunci $\varphi^{*}$ este o soluție asimptotic stabilă a ecuației date.
+\end{definition}
+
+\chapter{Modele matematice guvernate de ecuații diferențiale de ordinul întâi}
+\section{Modelul exponențial de creștere al lui Malthus}
+    \hspace*{10mm}Thomas R. Malthus (1766-1834) a fost un matematician britanic care a adus contribuții însemnate în domeniul demografiei și al economiei. Malthus a susținut că populațiile cresc odată cu îmbunătățirea mijloacelor de producție a bunurilor. Creșterea este oprită când clasele de jos ale societății încep să sufere, fapt ce duce adesea la apariția războiului, bolilor și a foametei. Acest ciclu poartă numele de capcană malthusiană.\\
+    \hspace*{10mm}“An Essay on the Principle of Population." este o lucrare publicată în mod anonim de către Malthus în anul 1798. În această lucrare savantul își exprimă temerile legate de creșterea necontrolată a populației. Malthus este adesea criticat pentru că nu a reușit să anticipeze revoluția industrială, iar modelul său s-a dovedit inexact pentru perioade mai lungi de timp. Totuși, influența lui Malthus asupra oamenilor de știință în deceniile care au urmat nu trebuie ignorată. 
+    În cele ce urmează vom analiza modelul de creștere malthusian.\\
+    \hspace*{10mm} Fie $y = \phi(t)$ numărul de indivizi ai unei specii la momentul t. Presupunem că $y$ este diferențiabilă. Notăm cu r rata de schimbare a densității populației. Pentru valori pozitive ale lui r spunem că populația cresște, iar pentru valori negative spunem că populația descrește. Astfel putem alcătui următorul model:\\
+        \begin{equation}
+            \frac{dy}{dt} = r\cdot y
+        \end{equation}
+
+    Pentru a determina soluția modelului trebuie să parcurgem următorii pași
+    \begin{enumerate}
+        \item Impunem condiția inițială 
+        \begin{equation*}
+            y(0) = y_{0}
+        \end{equation*}
+        \item Seprăm variabilele și integrăm ambii membri ai ecuației
+        \begin{equation*}
+            \int \frac{dy}{y} = \int r\cdot dt \iff \ln{y} = r\cdot t + c, c\in \mathbb{R}
+        \end{equation*}
+        \item Aplicăm condiția inițială
+        \begin{equation*}
+            \ln{y_{0}} = r\cdot 0 + c \iff \ln{y_{0}} = c
+        \end{equation*}
+        Obținem
+        \begin{equation}
+            \ln{y} = r\cdot t + \ln{y_{0}} \iff \ln{\frac{y}{y_{0}}} = r\cdot t \iff y = y_{0}\cdot e^{r\cdot t}
+        \end{equation}
+    \end{enumerate}
+    \begin{remark}
+        Când $t\rightarrow \infty$ și $r>0$ modelul ne arată că populația va crește la nesfârșit. În cazul în care $r<0$ populția va ajunge la extinție.
+    \end{remark}
+
+\begin{example}
+    Tabelul următor conține populația României de la anul 1900 până la anul 2020 la intervale de zece ani. O să aplicăm modelul lui Malthus pe mai multe intervale de timp pentru a pune în evidență calitățile și neajunsurile sale. Graficele și determinarea valorilor pentru $r$ vor fi realizate în Python folosind librariile Numpy și Matplotlib.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=1\linewidth]{popRom.png}
+    \end{figure}
+    
+    \hspace*{10mm} Pentru început vom aplica modelul pentru perioada 1950-1980. Reprezentăm într-un grafic populația țării în fiecare deceniu. Avem grijă să includem și perioada 1990-2020 în grafic pentru a putea analiza mai bine rezultatele obținute. 
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=1\linewidth]{populatie50-20.png}
+        \caption{Populația exacta}
+        \label{fig:enter-label}
+    \end{figure}
+
+    \begin{verbatim}
+        import matplotlib.pyplot as plt
+        def plot_populatie(timp, populatie, u_label):
+            plt.plot(timp, populatie, 'bo', label = u_label)
+    \end{verbatim}
+    
+    \hspace*{10mm}Obervăm că avem toate datele necesare pentru a putea folosi modelul, în afară de $r$. Pentr a-l găsi vom folosi o variantă a metodei celor mai mici pătrate. Amintim relația (2.1.2):
+    \begin{equation*}
+         \ln{y} = r\cdot t + \ln{y_{0}} 
+    \end{equation*}
+    Trecând membrul drept în partea stânga rezultă:
+    \begin{equation*}
+        \ln{y} - (r\cdot t + \ln{y_{0}}) = 0
+    \end{equation*}
+    Acum putem aplica metoda celor mai mici pătrate.
+    \begin{equation*}
+        E = \sum_{i = 1}^{n}[\ln{y_{i}} - (r\cdot t_{i} + \ln{y_{0}})]^{2}
+    \end{equation*}
+    Derivăm $E$ în funcție de $r$ și egalăm totul cu zero:
+    \begin{equation*}
+        2\cdot \sum_{i = 1}^{n}[\ln{y_{i}} - (r\cdot t_{i} + \ln{y_{0}})]\cdot (-t_{i}) = 0
+    \end{equation*}
+    În final ajungem la următorul rezultat, 
+    \begin{equation}
+        r = \frac{\sum_{i = 1}^{n} t_{i}\cdot (\ln(y_{i}) - \ln(y_{0}))}{\sum_{i = 1}^{n} t_{i}^{2}}
+    \end{equation}
+    În Python o să folosim urmâtoarea secvență de cod pentru a-l găsi pe r:
+    \begin{verbatim}
+        import numpy as np
+        
+        def find_r(populatie, timp, limita_s):
+            y0 = populatie[0]
+            timp_n = np.array(timp)
+            timp_n = timp_n - timp_n[0]
+            
+            s1 = s2 = 0
+            
+            for index in range(1, len(timp_n) - limita_s):
+                s1 += timp_n[index] * (np.log(populatie[index]) - np.log(y0))
+                s2 += timp_n[index] * timp_n[index]
+                
+            r = s1 / s2
+            
+            return r
+    \end{verbatim}
+
+    Pentru intervalul de timp 1950-1980 obținem următoarea valoare a lui r:
+    \begin{equation*}
+        r = 0.01056087612447687
+    \end{equation*}
+    \hspace*{10mm} Acum tot ce ne-a mai rămas de facut este să rezolvăm ecuația (2.1.2) folosind valoarea găsită pentru $r$ și să suprapunem graficul obținut cu cel din figura (2.1). Codul pentru noul grafic este următorul:
+    \begin{verbatim}
+        def plot_malthus(y0, timp, r, u_label):
+            timp_np = np.array(timp)
+            y = y0*np.exp(r*(timp_np-timp_np[0]))
+            plt.plot(timp_np, y, color = 'g', marker = 'o', 
+                    linestyle = '-', linewidth = 2, label = u_label)
+    \end{verbatim} 
+    
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=1\linewidth]{img.png}
+    \end{figure}
+
+    \hspace*{10mm} Putem să observăm că până în anul 1980 populația României are o creștere exponențială, iar modelul lui Malthus oferă o aproximare destul de exactă a populației,
+    dar, mai departe, nu mai poate oferi o aproximare rezonabilă. Modelul nu reușește să prezică diminuarea creșterii populației din anul 1990 și nici scăderea acesteia în deceniile următoare.
+
+    \hspace*{10mm}Acum o să aplicăm modelul pentru perioada 1990-2020 ca să vedem cât de bine se potrivește cu datele reale.  De data aceasta valoarea lui $r$ o să fie una negativă, mai exact:
+    \begin{equation}
+        r = -0.006145152727174695
+    \end{equation}
+    \clearpage
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=1\linewidth]{img_2.png}
+        \caption{Enter Caption}
+        \label{fig:enter-label}
+    \end{figure}
+
+    \hspace*{10mm} Nici de data asta nu avem un grafic satisfăcător. În anul 2000 populația este considerabil mai mare decât rezultatul pe care îl obținem, și în 2010 populația a scăzut mai mult decât anticipează modelul.
+    
+\end{example}
+\section{Modelul logistic de creștere al lui Verhulst}
+
+\hspace*{10mm}Modelul logistic de cresștere a populației a fost introdus de către Pierre Francois(c cu accent) Verhulst într-o serie de trei lucrări publicate între 1838 și 1847. Acest model presupune că există o constantă de suport a mediului numită K, care reprezintă un nivel stabil al populației. Dacă populația este mai mică decât $K$, ea va crește, iar în caz contrar va scădea.\\
+\hspace*{10mm}Considerăm din nou $y = \phi(t)$ numărul de indivizi ai speciei la momentul t și $r$ rata de schimbare a densității populației.
+
+\begin{equation*}
+    \frac{dy}{dt} = r\cdot y\cdot(1 - \frac{y}{k})
+\end{equation*}
+
+\hspace*{10mm}Vom rezolva modelul parcurgând următorii pași
+\begin{enumerate}
+    \item Impunem condția inițială:
+    \begin{equation*}
+        y(0) = y_{0}
+    \end{equation*}
+    \item Rescriem ecuația și separăm termenii care îl conțin pe y în partea dreaptă
+    \begin{equation*}
+        \frac{dy}{dt} = r\cdot y\cdot(1 - \frac{y}{k}) \iff \frac{dy}{dt} = \frac{r\cdot y}{k}\cdot(k - y) \iff \frac{dy}{y\cdot (k - y)} = \frac{r\cdot dt}{k}
+    \end{equation*}
+    \item Integrăm ambele părți
+    \begin{equation*}
+        \int \frac{dy}{y\cdot (k - y)} = \int \frac{r\cdot dt}{k} \iff \frac{1}{k}\cdot (\int \frac{dy}{y} + \int \frac{dy}{k - y}) = \frac{1}{k}\cdot\int\ r\cdot dt  \iff 
+    \end{equation*}
+    \begin{equation*}
+        \frac{1}{k}\cdot(\ln{y} - \ln{(k-y)}) = \frac{r}{k}\cdot t + c, c\in             \mathbb{R}
+    \end{equation*}
+    \item Aplicăm condiția inițială ca să obținem constanta $c$
+    \begin{equation*}
+        \frac{1}{k}\cdot(\ln{y_{0}} - \ln{(k-y_{0})}) = c
+    \end{equation*}
+    \item Înlocuim $c$ în ecuație și îl aflăm pe $y$
+    \begin{equation*}
+         \frac{1}{k}\cdot(\ln{y} - \ln{(k-y)}) = \frac{r}{k}\cdot t + \frac{1}{k}\cdot(\ln{y_{0}} - \ln{(k-y_{0})})
+    \end{equation*}
+    \begin{equation*}
+         \iff \ln{\frac{y}{k-y}} = r\cdot t + \ln{\frac{y_{0}}{k-y_{0}}} \iff \ln{\frac{y\cdot(k-y_{0})}{y_{0}\cdot(k-y)}} = r\cdot t 
+    \end{equation*}
+    \begin{equation*}
+        \iff y\cdot(k-y_{0}) = e^{r\cdot t}\cdot y_{0}\cdot(k-y) \iff y\cdot (k-y_{0} + y_{0}\cdot e^{r\cdot t}) = k\cdot y_{0}\cdot e^{r\cdot t}
+    \end{equation*}
+
+    \item În final, ajungem la următorul rezultat
+    \begin{equation*}
+        y = \frac{k\cdot y_{0}\cdot e^{r\cdot t}}{y_{0}+(k - y_{0})\cdot e^{-r\cdot t}}
+    \end{equation*}
+    
+    \end{enumerate}
+
+
+\section{Folosirea modelului logistic și exponențial pentru a determina populația unui oraș pe un interval de timp}
+
+\chapter{Modele matematice exprimate prin sisteme de ecuații diferențiale}
+
+\hspace*{10mm}Până acum modelele pe care le-am studiat s-au concentrat pe evoluția unei singure specii. Însă, în viața reală înâlnim cazuri în care două sau mai multe specii interacționează între ele. Speciile interacționează între ele în mai multe moduri. În acest capitol vom discuta despre cazul în care o specie vânează altă specie, ambele specii concurează pentru aceeași resursă.\\
+\hspace*{10mm}Pentru a putea descrie comportamentul fiecărei specii vom fi nevoiți să atribuim câte o ecuație diferenșială fiecărei specii. Astfel modelul pe care îl construim o să conțină un sistem de ecuații diferențiale.
+
+\break
+
+
+
+\section{Modelul pradă-prădător}
+\section{Specii în competiție}
+\section{Modele cu recoltare}
+\end{document}
+
